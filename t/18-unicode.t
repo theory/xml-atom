@@ -3,7 +3,8 @@
 use strict;
 use encoding "utf-8";
 
-use Test::More skip_all => "Skipping Unicode test since it depends on LibXML";
+#use Test::More skip_all => "Skipping Unicode test since it depends on LibXML";
+use Test::More 'no_plan';
 use XML::Atom;
 use XML::Atom::Entry;
 use XML::Atom::Person;
@@ -32,3 +33,9 @@ is $cat[1], "猫";
 is $entry->content->type, 'text/html';
 ok utf8::is_utf8($entry->content->body);
 is $entry->content->body, "<p>これは日本語のポストです。</p>";
+
+my $feed;
+ok $feed = XML::Atom::Feed->new('t/samples/atom-1.0.xml');
+is $feed->encoding, 'utf-8';
+ok $feed = XML::Atom::Feed->new('t/samples/feed.xml');
+is $feed->encoding, 'iso-8859-1';

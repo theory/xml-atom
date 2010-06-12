@@ -136,6 +136,20 @@ sub add_entry_xpath {
     }
 }
 
+sub encoding {
+    my $feed = shift;
+    if (LIBXML) {
+        if (@_) {
+            $feed->elem->setEncoding(shift);
+        } else {
+            return $feed->elem->encoding;
+        }
+    } else {
+        # XXX Update XML::XPath to get the encoding.
+        return;
+    }
+}
+
 __PACKAGE__->mk_elem_accessors(qw( generator ));
 __PACKAGE__->mk_xml_attr_accessors(qw( lang base ));
 
